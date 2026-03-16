@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CraftFood — Culinária Oriental Artesanal
 
-## Getting Started
+Site institucional do restaurante fictício **CraftFood**, especializado em culinária japonesa. Construído com Next.js 14, React 18 e Tailwind CSS.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)
+
+---
+
+## Visão Geral
+
+O CraftFood é um projeto front-end responsivo com foco em performance e experiência visual. Inclui animações de scroll, scrollbar customizada e imagens de alta qualidade via Unsplash.
+
+### Páginas
+
+| Rota | Descrição |
+|------|-----------|
+| `/` | Home — Header hero, seção Sobre Nós, Pratos Populares, Depoimentos e Footer |
+| `/cardapio` | Cardápio completo organizado por categorias + Horários & Eventos |
+
+### Componentes
+
+| Componente | Descrição |
+|------------|-----------|
+| `Navigation` | Navbar fixa com menu responsivo (hamburger no mobile) |
+| `Header` | Hero section com título, CTA e imagem flutuante |
+| `Hero` | Seção "Sobre Nós" com foto do restaurante |
+| `Populares` | Grid de cards 16:9 com pratos populares (imagens Unsplash) |
+| `Comentarios` | Depoimentos de clientes com estrelas |
+| `Cardapio` | Menu completo dividido por categorias |
+| `Agenda` | Horários de funcionamento e eventos especiais |
+| `Footer` | Links, contato e redes sociais |
+| `ScrollReveal` | Wrapper de animação por scroll (IntersectionObserver) |
+
+### Funcionalidades
+
+- **Scroll Reveal Animations** — 6 variantes (fade-up, fade-down, fade-left, fade-right, scale-up, blur-in) com delays escalonados
+- **Custom Scrollbar** — Gradiente vermelho → dourado nas cores da marca
+- **Imagens Unsplash** — Fotos de alta qualidade otimizadas via `next/image`
+- **Responsivo** — Layout adaptável para mobile, tablet e desktop
+- **Animações contínuas** — Float no header, pulse-glow no botão CTA
+
+---
+
+## Instalação
 
 ```bash
+# Clonar o repositório
+git clone <url-do-repo>
+cd craftfood
+
+# Instalar dependências
+npm install
+
+# Rodar em modo de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando | Descrição |
+|---------|-----------|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Build de produção |
+| `npm run start` | Servidor de produção |
+| `npm run lint` | Verifica ESLint |
 
-## Learn More
+## Estrutura de Pastas
 
-To learn more about Next.js, take a look at the following resources:
+```
+craftfood/
+├── public/              # Assets estáticos (logo, ícones sociais)
+├── src/
+│   ├── app/
+│   │   ├── globals.css      # Tailwind + scrollbar + animações
+│   │   ├── layout.tsx       # Layout raiz com Navigation
+│   │   ├── page.tsx         # Página Home
+│   │   └── cardapio/
+│   │       └── page.tsx     # Página Cardápio
+│   ├── components/          # Componentes React
+│   └── hooks/
+│       └── useScrollReveal.ts  # Hook de animação por scroll
+├── tailwind.config.ts   # Cores e fontes da marca
+├── next.config.mjs      # Config com domínios de imagem (Unsplash)
+└── package.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tecnologias
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Next.js 14** (App Router)
+- **React 18**
+- **TypeScript 5**
+- **Tailwind CSS 3.4**
+- **next/image** com remote patterns (Unsplash)
 
-## Deploy on Vercel
+## Cores da Marca
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Token | Cor | Hex |
+|-------|-----|-----|
+| `brand-red` | Vermelho | `#dc2626` |
+| `brand-dark` | Escuro | `#1a1a1a` |
+| `brand-gold` | Dourado | `#d4a574` |
+| `brand-cream` | Creme | `#faf7f2` |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+> **Nota:** Todos os dados do site (nomes, endereços, telefones, avaliações) são fictícios e utilizados apenas para fins de demonstração.
