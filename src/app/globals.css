@@ -2,52 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+JP:wght@400;500;700&display=swap');
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
     @apply bg-brand-cream text-brand-dark antialiased;
+    font-family: 'DM Sans', sans-serif;
   }
+}
+
+/* ── Grain texture overlay ── */
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 /* ── Custom Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #0d0d0d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #dc2626, #d4a574);
+  background: linear-gradient(180deg, #c9a96e, #c0392b);
   border-radius: 999px;
-  border: 2px solid #1a1a1a;
+  border: 2px solid #0d0d0d;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ef4444, #e0b88a);
+  background: linear-gradient(180deg, #e8b94a, #e74c3c);
 }
 
 /* Firefox */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #dc2626 #1a1a1a;
+  scrollbar-color: #c9a96e #0d0d0d;
 }
 
 /* ── Scroll Reveal Animations ── */
 .scroll-reveal {
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
 /* Fade Up */
 .scroll-reveal.fade-up {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateY(60px);
 }
 .scroll-reveal.fade-up.revealed {
   opacity: 1;
@@ -57,7 +74,7 @@ html {
 /* Fade Down */
 .scroll-reveal.fade-down {
   opacity: 0;
-  transform: translateY(-50px);
+  transform: translateY(-60px);
 }
 .scroll-reveal.fade-down.revealed {
   opacity: 1;
@@ -67,7 +84,7 @@ html {
 /* Fade Left */
 .scroll-reveal.fade-left {
   opacity: 0;
-  transform: translateX(-60px);
+  transform: translateX(-70px);
 }
 .scroll-reveal.fade-left.revealed {
   opacity: 1;
@@ -77,7 +94,7 @@ html {
 /* Fade Right */
 .scroll-reveal.fade-right {
   opacity: 0;
-  transform: translateX(60px);
+  transform: translateX(70px);
 }
 .scroll-reveal.fade-right.revealed {
   opacity: 1;
@@ -97,7 +114,7 @@ html {
 /* Blur In */
 .scroll-reveal.blur-in {
   opacity: 0;
-  filter: blur(12px);
+  filter: blur(16px);
 }
 .scroll-reveal.blur-in.revealed {
   opacity: 1;
@@ -106,20 +123,111 @@ html {
 
 /* ── Hero image float animation ── */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(0.5deg); }
+  66% { transform: translateY(-6px) rotate(-0.5deg); }
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 /* ── Subtle pulse glow for CTA buttons ── */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
-  50% { box-shadow: 0 0 20px 4px rgba(220, 38, 38, 0.2); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4); }
+  50% { box-shadow: 0 0 30px 6px rgba(201, 169, 110, 0.15); }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2.5s ease-in-out infinite;
+  animation: pulse-glow 3s ease-in-out infinite;
 }
+
+/* ── Japanese decorative line ── */
+.jp-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.jp-divider::before,
+.jp-divider::after {
+  content: '';
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+}
+
+/* ── Shimmer effect for gold text ── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #c9a96e 0%,
+    #e8b94a 25%,
+    #c9a96e 50%,
+    #e8b94a 75%,
+    #c9a96e 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Parallax-style background ── */
+.parallax-bg {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+/* ── Counter animation ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Kanji watermark ── */
+.kanji-watermark {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(8rem, 20vw, 18rem);
+  line-height: 1;
+  opacity: 0.03;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Card hover line effect ── */
+.card-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c9a96e, #c0392b);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-line:hover::after {
+  width: 80%;
+}
+
+/* ── Stagger children animation ── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: countUp 0.6s forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }

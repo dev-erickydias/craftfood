@@ -1,87 +1,122 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-brand-dark/95 backdrop-blur-sm">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-brand-dark backdrop-blur-md shadow-lg shadow-black/30"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="CraftFood" width={120} height={32} className="h-8 w-auto" />
+        <div className="flex items-center justify-between h-20">
+          <Link href="/" className="flex items-center gap-3 group">
+            <Image
+              src="/logo.svg"
+              alt="CraftFood"
+              width={180}
+              height={40}
+              className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/"
-              className="text-white/80 hover:text-white text-sm font-body transition-colors"
-            >
-              Início
-            </Link>
-            <Link
-              href="/#sobre"
-              className="text-white/80 hover:text-white text-sm font-body transition-colors"
-            >
-              Sobre Nós
-            </Link>
-            <Link
-              href="/#populares"
-              className="text-white/80 hover:text-white text-sm font-body transition-colors"
-            >
-              Populares
-            </Link>
+          <div className="hidden md:flex items-center gap-10">
+            {[
+              { href: "/", label: "Início" },
+              { href: "/#sobre", label: "Sobre Nós" },
+              { href: "/#populares", label: "Populares" },
+              { href: "/#galeria", label: "Galeria" },
+            ].map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="relative text-white/70 hover:text-white text-sm font-body font-medium tracking-wide transition-colors duration-300 after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold after:transition-all after:duration-300 hover:after:w-full"
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
               href="/cardapio"
-              className="bg-brand-red hover:bg-red-700 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
+              className="bg-brand-gold/10 border border-brand-gold/40 hover:bg-brand-gold hover:text-brand-dark text-brand-gold text-sm font-semibold px-6 py-2.5 rounded-none transition-all duration-300 tracking-widest uppercase text-xs"
             >
-              Reserve já
+              Cardápio
             </Link>
           </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 relative w-10 h-10 flex items-center justify-center"
             aria-label="Menu"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {open ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            <div className="relative w-6 h-5">
+              <span
+                className={`absolute left-0 h-[1.5px] bg-brand-gold transition-all duration-300 ${
+                  open ? "top-2 w-6 rotate-45" : "top-0 w-6"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-2 h-[1.5px] bg-brand-gold transition-all duration-300 ${
+                  open ? "opacity-0 w-0" : "opacity-100 w-4"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] bg-brand-gold transition-all duration-300 ${
+                  open ? "top-2 w-6 -rotate-45" : "top-4 w-5"
+                }`}
+              />
+            </div>
           </button>
         </div>
 
         {/* Mobile menu */}
-        {open && (
-          <div className="md:hidden pb-4 border-t border-white/10">
-            <div className="flex flex-col gap-3 pt-4">
-              <Link href="/" onClick={() => setOpen(false)} className="text-white/80 hover:text-white text-sm font-body px-2 py-1">
-                Início
-              </Link>
-              <Link href="/#sobre" onClick={() => setOpen(false)} className="text-white/80 hover:text-white text-sm font-body px-2 py-1">
-                Sobre Nós
-              </Link>
-              <Link href="/#populares" onClick={() => setOpen(false)} className="text-white/80 hover:text-white text-sm font-body px-2 py-1">
-                Populares
-              </Link>
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="pb-6 pt-2 border-t border-brand-gold/10">
+            <div className="flex flex-col gap-1 mt-4">
+              {[
+                { href: "/", label: "Início" },
+                { href: "/#sobre", label: "Sobre Nós" },
+                { href: "/#populares", label: "Populares" },
+                { href: "/#galeria", label: "Galeria" },
+              ].map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="text-white/70 hover:text-brand-gold text-sm font-body px-3 py-3 transition-colors border-b border-white/5"
+                >
+                  {link.label}
+                </Link>
+              ))}
               <Link
                 href="/cardapio"
                 onClick={() => setOpen(false)}
-                className="bg-brand-red text-white text-sm font-semibold px-5 py-2 rounded-full text-center mt-2"
+                className="mt-4 bg-brand-gold text-brand-dark text-xs font-bold px-6 py-3 text-center tracking-widest uppercase transition-colors hover:bg-brand-amber"
               >
-                Reserve já
+                Ver Cardápio
               </Link>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );

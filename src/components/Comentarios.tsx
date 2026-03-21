@@ -6,20 +6,30 @@ const reviews = [
   {
     name: "Fernanda Lopes",
     initials: "FL",
+    role: "Food Critic",
     stars: 5,
-    text: "Melhor restaurante japonês da cidade! O ramen é simplesmente perfeito, com caldo rico e ingredientes fresquíssimos.",
+    text: "Melhor restaurante japonês da cidade! O ramen é simplesmente perfeito, com caldo rico e ingredientes fresquíssimos. Uma experiência que transcende a gastronomia.",
   },
   {
     name: "Rafael Mendes",
     initials: "RM",
+    role: "Sommelier",
     stars: 5,
-    text: "Ambiente incrível e atendimento impecável. Os sushis são preparados na hora e o salmão derrete na boca.",
+    text: "Ambiente incrível e atendimento impecável. Os sushis são preparados na hora e o salmão derrete na boca. A carta de saquês é extraordinária.",
   },
   {
     name: "Camila Duarte",
     initials: "CD",
-    stars: 4,
-    text: "Adorei a experiência! O cardápio é variado e os preços são justos pela qualidade excepcional dos pratos.",
+    role: "Gastrônoma",
+    stars: 5,
+    text: "Adorei a experiência! O cardápio é variado e os preços são justos pela qualidade excepcional dos pratos. O omakase é imperdível.",
+  },
+  {
+    name: "Lucas Tanaka",
+    initials: "LT",
+    role: "Chef Amador",
+    stars: 5,
+    text: "Como neto de japoneses, posso dizer que o CraftFood honra verdadeiramente a tradição. Os sabores me transportam diretamente para Tóquio.",
   },
 ];
 
@@ -29,7 +39,7 @@ function Stars({ count }: { count: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
-          className={`w-4 h-4 ${i < count ? "text-yellow-400" : "text-gray-300"}`}
+          className={`w-3.5 h-3.5 ${i < count ? "text-brand-gold" : "text-white/10"}`}
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -42,35 +52,60 @@ function Stars({ count }: { count: number }) {
 
 export default function Comentarios() {
   return (
-    <section className="py-16 md:py-24 bg-brand-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-24 md:py-36 bg-brand-warmblack overflow-hidden">
+      {/* Background texture */}
+      <div className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 35px,
+            rgba(201, 169, 110, 0.5) 35px,
+            rgba(201, 169, 110, 0.5) 36px
+          )`
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal variant="fade-up">
-          <div className="text-center mb-12">
-            <p className="text-brand-red font-semibold text-sm uppercase tracking-widest font-body">
-              Depoimentos
-            </p>
-            <h2 className="mt-3 font-heading text-3xl sm:text-4xl text-brand-dark">
-              O que nossos clientes dizem
+          <div className="text-center mb-20">
+            <div className="jp-divider mb-6">
+              <span className="text-brand-gold font-accent text-sm tracking-[0.3em] uppercase">
+                Depoimentos
+              </span>
+            </div>
+            <h2 className="font-heading text-4xl sm:text-5xl text-white leading-tight">
+              O que dizem <span className="text-brand-gold italic">nossos clientes</span>
             </h2>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {reviews.map((r, i) => (
-            <ScrollReveal key={r.name} variant="fade-up" delay={i * 150}>
-              <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-400">
+            <ScrollReveal key={r.name} variant="fade-up" delay={i * 120}>
+              <div className="relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] p-7 hover:bg-white/[0.06] hover:border-brand-gold/20 transition-all duration-500 group h-full">
                 <Stars count={r.stars} />
-                <p className="mt-4 text-brand-dark/70 font-body text-sm leading-relaxed italic">
+
+                <p className="mt-5 text-white/50 font-body text-sm leading-[1.8] group-hover:text-white/70 transition-colors duration-500">
                   &ldquo;{r.text}&rdquo;
                 </p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-red flex items-center justify-center text-white font-bold text-xs">
+
+                <div className="mt-7 flex items-center gap-4 pt-5 border-t border-white/[0.06]">
+                  <div className="w-11 h-11 flex items-center justify-center border border-brand-gold/30 text-brand-gold font-heading text-sm">
                     {r.initials}
                   </div>
-                  <span className="font-body font-semibold text-sm text-brand-dark">
-                    {r.name}
-                  </span>
+                  <div>
+                    <p className="font-body font-medium text-sm text-white/90">
+                      {r.name}
+                    </p>
+                    <p className="font-body text-[11px] text-brand-gold/60 tracking-wider uppercase">
+                      {r.role}
+                    </p>
+                  </div>
                 </div>
+
+                {/* Corner accent */}
+                <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-brand-gold/0 group-hover:border-brand-gold/30 transition-all duration-500" />
               </div>
             </ScrollReveal>
           ))}
