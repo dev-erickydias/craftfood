@@ -95,7 +95,13 @@ export default function Cardapio() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {cat.items.map((item, i) => (
                   <ScrollReveal key={item.name} variant="fade-up" delay={i * 60}>
-                    <div className="group bg-white p-6 flex justify-between items-start gap-6 border border-transparent hover:border-brand-gold/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-400 relative overflow-hidden">
+                    <div className="group steam-card bg-white p-6 flex justify-between items-start gap-6 border border-transparent hover:border-brand-gold/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-400 relative overflow-visible">
+                      {/* Steam particles */}
+                      <span className="steam-particle" />
+                      <span className="steam-particle" />
+                      <span className="steam-particle" />
+                      <span className="steam-particle" />
+                      <span className="steam-particle" />
                       {/* Hover line */}
                       <div className="absolute left-0 top-0 w-[2px] h-0 bg-brand-gold group-hover:h-full transition-all duration-500" />
                       <div className="flex-1 pl-1">
